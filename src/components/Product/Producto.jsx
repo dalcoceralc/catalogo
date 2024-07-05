@@ -1,4 +1,4 @@
-const Producto = ({name,description,url}) => {
+const Producto = ({name,description,url, addToCart}) => {
 	return (
 		<div class="col-12 col-md-6 col-lg-4 mt-2 mb-2">
 			<div class="card">
@@ -6,7 +6,7 @@ const Producto = ({name,description,url}) => {
 					<div class="card-body">
 						<h5 class="card-title">{name}</h5>
 						<p class="card-text">{description}</p>
-						<button class="btn btn-primary" >Comprar</button>
+						<button class="btn btn-primary" onClick={addToCart}>Comprar</button>
 					</div>
 			</div>
 		</div>

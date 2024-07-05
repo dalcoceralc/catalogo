@@ -1,7 +1,11 @@
+import { useState } from "react";
 import Producto from "../Product/Producto";
+import Carrito from "../Cart/Carrito";
 
 const Catalogo = () => {
 	
+	const [cart , setCart] = useState([]);
+
 	const products = [
 		{
 			name : 'producto1',
@@ -23,7 +27,33 @@ const Catalogo = () => {
 			description : 'esto es una descipcion del producto 4',
 			url : 'https://guiadelempresario.com/wp-content/uploads/2020/09/Producto-scaled.jpg',
 		},
+		{
+			name : 'producto5',
+			description : 'esto es una descipcion del producto 5',
+			url : 'https://guiadelempresario.com/wp-content/uploads/2020/09/Producto-scaled.jpg',
+		},
+		{
+			name : 'producto6',
+			description : 'esto es una descipcion del producto 6',
+			url : 'https://guiadelempresario.com/wp-content/uploads/2020/09/Producto-scaled.jpg',
+		},
 	];
+
+	const addToCart = (product) => {
+		setCart( (prevCart) =>{
+			const existingProduct = prevCart.find( (item) => item.name === product.name);
+
+			if(existingProduct){
+				return prevCart.map( (item) =>
+					item.name === product.name ? { ...item, quantity: item.quantity + 1 } : item
+				);
+			} else {
+				return [ ...prevCart, { ...product, quantity:1 }];
+			}
+		}
+
+		)
+	}
 
 	return (
 		<div class="container">
@@ -36,18 +66,14 @@ const Catalogo = () => {
 						key={index} 
 						name={producto.name} 
 						description={producto.description} 
-						url={producto.url} />
+						url={producto.url} 
+						addToCart={()=> addToCart(producto)}
+						/>
 					))}
 					
 				</div>
 				
-				<div id="carrito" class="col-4 bg-secondary mt-2 mb-2">
-					<h3>Carrito de Compras</h3>
-						<ul id="cont-cart">
-						</ul>
-					<p>TOTAL: <span id="total-cart">S/ 0</span></p>
-					<button class="btn btn-primary">PAGAR</button>
-				</div>
+				<Carrito cart={cart} />
 				
 			</div>
 		</div>
